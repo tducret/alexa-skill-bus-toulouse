@@ -5,6 +5,7 @@ from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_model.ui import SimpleCard
 from os import environ
+from tisseo import prochains_passages
 
 from six import PY2
 try:
@@ -85,8 +86,11 @@ def demande_des_prochains_passages_a_un_arret(handler_input):
 
     if arret_bus_slot in slots:
         arret_bus_demande = slots[arret_bus_slot].value
-        speech = ("Le prochain bus à l'arret {} passe dans 5 minutes".format(
-            arret_bus_demande))
+        p = prochains_passages(arret_bus_demande)
+        speech = "Le bus {} à destination de {} passera dans {}".format(
+            p.ligne, p.destination, p.timedelta_str)
+        # speech = ("Le prochain bus à l'arret {} passe dans 5 minutes".format(
+        #     arret_bus_demande))
     else:
         speech = "Je ne suis pas sûr de comprendre le nom de l'arrêt de bus."
 

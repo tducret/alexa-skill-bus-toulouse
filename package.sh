@@ -10,9 +10,9 @@
 PACKAGE_NAME="alexa-skill-bus-toulouse"
 PROJECT_DIR=$(pwd)
 BUILD_DIR="build"
-SOURCE="bus_toulouse.py"
+SOURCES="bus_toulouse.py tisseo.py"
 VIRTUAL_ENV="skill"
-NEEDED_PACKAGES="ask_sdk_core ask_sdk_model"
+NEEDED_PACKAGES="ask_sdk_core ask_sdk_model requests urllib3 certifi idna chardet pytz"
 STOP_AREAS_FILE="stop_areas.json"
 
 # Check if Tisseo API key is properly set to an environment variable
@@ -29,7 +29,7 @@ mkdir -p ${BUILD_DIR}
 rm -f "$BUILD_DIR/$PACKAGE_NAME.zip"
 
 # package out python module
-zip -r9 "$BUILD_DIR/$PACKAGE_NAME.zip" "$SOURCE"
+zip -r9 "$BUILD_DIR/$PACKAGE_NAME.zip" $SOURCES
 
 # package dependencies
 cd $VIRTUAL_ENV/lib/python3.7/site-packages

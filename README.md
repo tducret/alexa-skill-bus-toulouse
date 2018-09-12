@@ -7,6 +7,7 @@ Non-official Alexa skill to get info about Tisséo Toulouse buses (France).
 ## Usage
 
 > Alexa, quel est le prochain bus à l'arrêt Moulin Armand?
+
 > Le bus 62 à destination de Ramonville passera dans 5 minutes.
 
 ## License

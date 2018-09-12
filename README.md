@@ -17,7 +17,7 @@ Le bus 62 à destination de Ramonville passera dans 5 minutes.
 
 ### Lambda 
 
-- Alexa skill kit is not available in Paris AWS datacenter
+- Alexa skill kit is not available in Paris AWS datacenter (en Irlande oui)
 - Make sure you put `bus_toulouse.handler` in Gestionnaire
 
 ## License

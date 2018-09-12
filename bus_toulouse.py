@@ -30,7 +30,7 @@ class SSMLStripper(HTMLParser):
 
 
 skill_name = "Bus Toulouse"
-help_text = ("Quel est le prochain passage de votre bus. Vous pouvez dire"
+help_text = ("Vous pouvez demander :"
              "Quand passe le prochain bus à l'arrêt Moulin Armand ?")
 
 arret_bus_slot = "arret_bus"
@@ -74,22 +74,17 @@ def session_ended_request_handler(handler_input):
 
 @sb.request_handler(can_handle_func=is_intent_name(
     "demande_des_prochains_passages_a_un_arret"))
-def prochains_passages_a_un_arret(handler_input):
+def demande_des_prochains_passages_a_un_arret(handler_input):
     slots = handler_input.request_envelope.request.intent.slots
 
     if arret_bus_slot in slots:
         arret_bus_demande = slots[arret_bus_slot].value
-        speech = ("Le prochain bus à l'arret {} passe de 5 minutes".format(
+        speech = ("Le prochain bus à l'arret {} passe dans 5 minutes".format(
             arret_bus_demande))
     else:
         speech = "Je ne suis pas sûr de comprendre le nom de l'arrêt de bus."
-        reprompt = ("Je ne suis pas sûr de comprendre le nom de l'arrêt \
-de bus. "
-                    "Vous pouvez dire par exemple, "
-                    "quand passe le prochain bus à l'arrêt Moulin Armand ?")
 
-    handler_input.response_builder.speak(speech).ask(reprompt)
-    return handler_input.response_builder.response
+    return handler_input.response_builder.speak(speech).ask(help_text)
 
 
 def convert_speech_to_text(ssml_speech):
@@ -125,7 +120,7 @@ def all_exception_handler(handler_input, exception):
     # respond with custom message
     print("Encountered following exception: {}".format(exception))
 
-    speech = "Sorry, there was some problem. Please try again!!"
+    speech = "Désolé, il y a eu un problème. Merci de réessayer."
     handler_input.response_builder.speak(speech).ask(speech)
 
     return handler_input.response_builder.response

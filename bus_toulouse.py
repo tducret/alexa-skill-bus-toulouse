@@ -4,6 +4,7 @@
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_model.ui import SimpleCard
+from os import environ
 
 from six import PY2
 try:
@@ -11,6 +12,8 @@ try:
 except ImportError:
     from html.parser import HTMLParser
 
+
+################################################
 
 class SSMLStripper(HTMLParser):
     def __init__(self):
@@ -28,6 +31,7 @@ class SSMLStripper(HTMLParser):
 
 ################################################
 
+_TISSEO_API_KEY = environ['TISSEO_API_KEY']
 
 skill_name = "Bus Toulouse"
 help_text = ("Vous pouvez demander : "

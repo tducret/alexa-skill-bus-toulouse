@@ -1,0 +1,67 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "bus toulouse",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "demande_des_prochains_passages_a_un_arret",
+                    "slots": [
+                        {
+                            "name": "arret_bus",
+                            "type": "liste_arrets_bus"
+                        }
+                    ],
+                    "samples": [
+                        "Quel est le prochain bus aux {arret_bus}",
+                        "Quel est le prochain bus à {arret_bus}",
+                        "Prochain bus de {arret_bus}",
+                        "Quel est le prochain bus à l'arret {arret_bus}",
+                        "Quel est le prochain bus pour {arret_bus}",
+                        "Quand passe le prochain bus a l'arret {arret_bus}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "liste_arrets_bus",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "castanet république"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "halles",
+                                "synonyms": [
+                                    "halles castanet"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "moulin armand"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

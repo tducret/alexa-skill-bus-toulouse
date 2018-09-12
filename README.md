@@ -6,9 +6,19 @@ Non-official Alexa skill to get info about Tisséo Toulouse buses (France).
 
 ## Usage
 
-> Alexa, quel est le prochain bus à l'arrêt Moulin Armand?
+Alexa, quand passe le prochain bus à l'arrêt Moulin Armand?
 
-> Le bus 62 à destination de Ramonville passera dans 5 minutes.
+Le bus 62 à destination de Ramonville passera dans 5 minutes.
+
+## Useful
+
+[Console de développement Alexa](https://developer.amazon.com/alexa/console/ask)
+[Console Lambda](https://eu-west-1.console.aws.amazon.com/lambda/home?region=eu-west-1)
+
+### Lambda 
+
+- Alexa skill kit is not available in Paris AWS datacenter
+- Make sure you put `bus_toulouse.handler` in Gestionnaire
 
 ## License
 

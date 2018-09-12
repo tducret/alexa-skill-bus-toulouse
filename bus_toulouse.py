@@ -30,7 +30,7 @@ class SSMLStripper(HTMLParser):
 
 
 skill_name = "Bus Toulouse"
-help_text = ("Vous pouvez demander :"
+help_text = ("Vous pouvez demander : "
              "Quand passe le prochain bus à l'arrêt Moulin Armand ?")
 
 arret_bus_slot = "arret_bus"
@@ -41,7 +41,7 @@ sb = SkillBuilder()
 @sb.request_handler(can_handle_func=is_request_type("LaunchRequest"))
 def launch_request_handler(handler_input):
     # Handler for Skill Launch
-    speech = "Bienvenue dans la skill des bus de Toulouse"
+    speech = "Bienvenue dans la skill des bus de Toulouse."
 
     handler_input.response_builder.speak(
         speech + " " + help_text).ask(help_text)
@@ -84,7 +84,8 @@ def demande_des_prochains_passages_a_un_arret(handler_input):
     else:
         speech = "Je ne suis pas sûr de comprendre le nom de l'arrêt de bus."
 
-    return handler_input.response_builder.speak(speech).ask(help_text)
+    handler_input.response_builder.speak(speech)
+    return handler_input.response_builder.response
 
 
 def convert_speech_to_text(ssml_speech):

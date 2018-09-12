@@ -20,6 +20,7 @@ if [ -z "$TISSEO_API_KEY" ]
 	then echo "TISSEO_API_KEY must be set to continue"
 	exit 2
 else
+	rm "$STOP_AREAS_FILE"
 	curl "http://api.tisseo.fr/v1/stop_areas.json?key=$TISSEO_API_KEY" > "$STOP_AREAS_FILE"
 fi
 
@@ -38,4 +39,3 @@ cd ${PROJECT_DIR}
 
 # add necessary files
 zip -r9 "$PROJECT_DIR/$BUILD_DIR/$PACKAGE_NAME.zip" "$STOP_AREAS_FILE"
-rm "$STOP_AREAS_FILE"

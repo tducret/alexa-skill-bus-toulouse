@@ -103,3 +103,6 @@ skill/
 
 # mypy
 .mypy_cache/
+
+# Tisseo files
+stop_areas.json

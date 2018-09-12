@@ -32,6 +32,8 @@ class SSMLStripper(HTMLParser):
 ################################################
 
 _TISSEO_API_KEY = environ['TISSEO_API_KEY']
+if _TISSEO_API_KEY == "":
+    raise KeyError("TISSEO_API_KEY environment variable must be set")
 
 skill_name = "Bus Toulouse"
 help_text = ("Vous pouvez demander : "

@@ -87,10 +87,12 @@ def demande_des_prochains_passages_a_un_arret(handler_input):
     if arret_bus_slot in slots:
         arret_bus_demande = slots[arret_bus_slot].value
         p = prochains_passages(arret_bus_demande)
-        speech = "Le bus {} à destination de {} passera dans {}".format(
-            p.ligne, p.destination, p.timedelta_str)
-        # speech = ("Le prochain bus à l'arret {} passe dans 5 minutes".format(
-        #     arret_bus_demande))
+        if p is None:
+            speech = "Aucun passage prévu à cet arrêt \
+pour les prochaines heures"
+        else:
+            speech = "Le bus {} à destination de {} passera dans {}".format(
+                p.ligne, p.destination, p.timedelta_str)
     else:
         speech = "Je ne suis pas sûr de comprendre le nom de l'arrêt de bus."
 

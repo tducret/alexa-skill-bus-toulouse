@@ -22,3 +22,8 @@ Non-official Alexa skill to get info about Tisséo Toulouse buses (France).
 ## License
 
 L'utilisation de l'API Tisséo est soumise à la licence ODbL <http://data.grandtoulouse.fr/la-licence>
+
+## TODO
+
+- [ ] Lorsque le nom de l'arrêt est le même pour plusieurs villes. Demander à l'utilisateur de confirmer sa ville
+- [ ] Gestion d'arrêts favoris? Ou d'itinéraires favoris?

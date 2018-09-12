@@ -119,9 +119,12 @@ def prochains_passages(stop_area_name):
     stop_area_id = stop_areas[0].get("id")
     prochains_passages = get_prochains_passages_for_stop_area_id(stop_area_id)
 
-    prochain_passage = prochains_passages[0]
-    date = prochain_passage.get("dateTime")
-    ligne = prochain_passage.get("line").get("shortName")
-    destination = prochain_passage.get("destination")[0].get("name")
-    p = Passage(date=date, ligne=ligne, destination=destination)
+    if len(prochains_passages) < 1:
+        p = None
+    else:
+        prochain_passage = prochains_passages[0]
+        date = prochain_passage.get("dateTime")
+        ligne = prochain_passage.get("line").get("shortName")
+        destination = prochain_passage.get("destination")[0].get("name")
+        p = Passage(date=date, ligne=ligne, destination=destination)
     return p

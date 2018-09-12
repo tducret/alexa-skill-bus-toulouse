@@ -27,3 +27,4 @@ L'utilisation de l'API Tisséo est soumise à la licence ODbL <http://data.grand
 
 - [ ] Lorsque le nom de l'arrêt est le même pour plusieurs villes. Demander à l'utilisateur de confirmer sa ville
 - [ ] Gestion d'arrêts favoris? Ou d'itinéraires favoris?
+- [ ] Gestion des lignes de métro et tramway (en particulier pour ne pas dire "le bus B")

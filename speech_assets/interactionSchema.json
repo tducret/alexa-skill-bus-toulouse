@@ -25,15 +25,18 @@
                         {
                             "name": "arret_bus",
                             "type": "liste_arrets_bus"
+                        },
+                        {
+                            "name": "question_prochain_bus",
+                            "type": "question_prochain_bus"
+                        },
+                        {
+                            "name": "prepo_avant_arret",
+                            "type": "prepo_avant_arret"
                         }
                     ],
                     "samples": [
-                        "Quel est le prochain bus aux {arret_bus}",
-                        "Quel est le prochain bus à {arret_bus}",
-                        "Prochain bus de {arret_bus}",
-                        "Quel est le prochain bus à l'arret {arret_bus}",
-                        "Quel est le prochain bus pour {arret_bus}",
-                        "Quand passe le prochain bus a l'arret {arret_bus}"
+                        "{question_prochain_bus} {prepo_avant_arret} l'arrêt {arret_bus}"
                     ]
                 }
             ],
@@ -10224,6 +10227,46 @@
                         {
                             "name": {
                                 "value": "za les pousses"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "question_prochain_bus",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Quel est le prochain bus"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "le prochain bus"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Quand passe le prochain bus"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "prepo_avant_arret",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "pour"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "de"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "à"
                             }
                         }
                     ]

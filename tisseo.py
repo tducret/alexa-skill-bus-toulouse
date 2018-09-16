@@ -110,7 +110,9 @@ def _timedelta_to_str(time_delta):
     return delta
 
 
-def prochains_passages(stop_area_name):
+def prochains_passages(stop_area_name, destination, line):
+    """ Get next passages and filter with destination and line if specified """
+
     stop_areas = get_stop_area_by_name(stop_area_name)
     if len(stop_areas) < 1:
         raise KeyError("Arrêt {} inconnu".format(stop_area_name))
@@ -120,7 +122,7 @@ def prochains_passages(stop_area_name):
     stop_area_id = stop_areas[0].get("id")
 
     json_prochains_passages = get_prochains_passages_for_stop_area_id(
-        stop_area_id=stop_area_id, limit=5)
+        stop_area_id=stop_area_id, limit=15)
 
     if len(json_prochains_passages) < 1:
         p = None
@@ -128,20 +130,60 @@ def prochains_passages(stop_area_name):
     else:
         liste_prochains_passages = []
         for passage in json_prochains_passages:
-            date = passage.get("dateTime")
-            ligne = passage.get("line").get("shortName")
-            destination = passage.get("destination")[0].get("name")
-            p = Passage(date=date, ligne=ligne, destination=destination)
+            d = passage.get("dateTime")
+            l = passage.get("line").get("shortName")
+            dest = passage.get("destination")[0].get("name")
+            p = Passage(date=d, ligne=l, destination=dest)
             liste_prochains_passages.append(p)
 
-        liste_prochains_passages = _filter_passages(liste_prochains_passages)
+        liste_prochains_passages = _filter_passages(
+            liste_prochains_passages=liste_prochains_passages,
+            line=line,
+            destination=destination)
+
     return liste_prochains_passages
 
 
-def _filter_passages(liste_prochains_passages):
+def _filter_passages_for_one_line(liste_prochains_passages, line):
+    """ Returns the list of passages for the specified line only """
+    if (line is not None) and (line != "None"):
+        liste_p = []
+        for p in liste_prochains_passages:
+            if p.ligne.lower() == line.lower():
+                liste_p.append(p)
+    else:
+        liste_p = liste_prochains_passages
+
+    return liste_p
+
+
+def _filter_passages_for_a_destination(liste_prochains_passages, destination):
+    """ Returns the list of passages for the specified destination only """
+    if (destination is not None) and (destination != "None"):
+        liste_p = []
+        for p in liste_prochains_passages:
+            if p.destination.lower().replace("-", " ") == \
+               destination.lower().replace("-", " "):
+
+                liste_p.append(p)
+    else:
+        liste_p = liste_prochains_passages
+
+    return liste_p
+
+
+def _filter_passages(liste_prochains_passages, line, destination):
     """ Filter a list of passages on different criteria """
 
-    # Get only one passage for the same line and destination
+    # Filter for the line
+    liste_prochains_passages = _filter_passages_for_one_line(
+        liste_prochains_passages=liste_prochains_passages,
+        line=line)
+
+    # Filter for the destination
+    liste_prochains_passages = _filter_passages_for_a_destination(
+        liste_prochains_passages=liste_prochains_passages,
+        destination=destination)
 
     # ["L6 > Ramonville : 10h52, 109 > Labège : 10h55,
     # L6 > Ramonville : 11h15, L6 > Castanet : 12h05"]

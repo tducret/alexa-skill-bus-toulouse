@@ -41,6 +41,8 @@ help_text = ("Vous pouvez demander : "
              "Quand passe le prochain bus à l'arrêt Moulin Armand ?")
 
 arret_bus_slot = "arret_bus"
+destination_slot = "destination"
+ligne_slot = "ligne"
 
 sb = SkillBuilder()
 
@@ -84,15 +86,33 @@ def session_ended_request_handler(handler_input):
 def demande_des_prochains_passages_a_un_arret(handler_input):
     slots = handler_input.request_envelope.request.intent.slots
 
+    arret_bus_demande = None
+    destination = None
+    ligne = None
+
     if arret_bus_slot in slots:
         arret_bus_demande = slots[arret_bus_slot].value
-        liste_p = prochains_passages(arret_bus_demande)
 
+    if destination_slot in slots:
+        destination = slots[destination_slot].value
+
+    if ligne_slot in slots:
+        ligne = slots[ligne_slot].value
+
+    liste_p = prochains_passages(stop_area_name=arret_bus_demande,
+                                 destination=destination,
+                                 line=ligne)
+
+    if len(liste_p) < 1:
+        speech = "Dans les prochaines heures, \
+aucun passage prévu à l'arrêt {}.".format(arret_bus_demande)
+
+    else:
         speech = "A l'arrêt {}, ".format(arret_bus_demande)
         for p in liste_p:
             if p is None:
                 speech = "Dans les prochaines heures, \
-aucun passage prévu à l'arrêt {}.".format(arret_bus_demande)
+    aucun passage prévu à l'arrêt {}.".format(arret_bus_demande)
             else:
                 if p.ligne == "A":
                     speech += "Le métro ligne {},".format(p.ligne)
@@ -106,8 +126,6 @@ aucun passage prévu à l'arrêt {}.".format(arret_bus_demande)
 
                 speech += " à destination de {}, passera dans {}. ".format(
                     p.destination, p.timedelta_str)
-    else:
-        speech = "Je ne suis pas sûr de comprendre le nom de l'arrêt de bus."
 
     handler_input.response_builder.speak(speech)
     return handler_input.response_builder.response

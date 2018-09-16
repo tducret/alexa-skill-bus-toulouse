@@ -30,6 +30,7 @@ class Passage(object):
         self.date_obj = _str_datetime_to_datetime_obj(self.date_str)
         self.timedelta = _get_timedelta(self.date_obj)
         self.timedelta_str = _timedelta_to_str(self.timedelta)
+        self.ligne_destination = "{} : {}".format(self.ligne, self.destination)
 
     def __str__(self):
         return "{} ({}) : {}".format(
@@ -117,14 +118,39 @@ def prochains_passages(stop_area_name):
         print("Plusieurs arrêts trouvés pour {}".format(stop_area_name))
 
     stop_area_id = stop_areas[0].get("id")
-    prochains_passages = get_prochains_passages_for_stop_area_id(stop_area_id)
 
-    if len(prochains_passages) < 1:
+    json_prochains_passages = get_prochains_passages_for_stop_area_id(
+        stop_area_id=stop_area_id, limit=5)
+
+    if len(json_prochains_passages) < 1:
         p = None
+
     else:
-        prochain_passage = prochains_passages[0]
-        date = prochain_passage.get("dateTime")
-        ligne = prochain_passage.get("line").get("shortName")
-        destination = prochain_passage.get("destination")[0].get("name")
-        p = Passage(date=date, ligne=ligne, destination=destination)
-    return p
+        liste_prochains_passages = []
+        for passage in json_prochains_passages:
+            date = passage.get("dateTime")
+            ligne = passage.get("line").get("shortName")
+            destination = passage.get("destination")[0].get("name")
+            p = Passage(date=date, ligne=ligne, destination=destination)
+            liste_prochains_passages.append(p)
+
+        liste_prochains_passages = _filter_passages(liste_prochains_passages)
+    return liste_prochains_passages
+
+
+def _filter_passages(liste_prochains_passages):
+    """ Filter a list of passages on different criteria """
+
+    # Get only one passage for the same line and destination
+
+    # ["L6 > Ramonville : 10h52, 109 > Labège : 10h55,
+    # L6 > Ramonville : 11h15, L6 > Castanet : 12h05"]
+    # => ["L6 > Ramonville : 10h52, 109 > Labège : 10h55,
+    # L6 > Castanet : 12h05"]
+    liste_p = []
+    ligne_destination_couvertes = []
+    for p in liste_prochains_passages:
+        if p.ligne_destination not in ligne_destination_couvertes:
+            liste_p.append(p)
+            ligne_destination_couvertes.append(p.ligne_destination)
+    return liste_p

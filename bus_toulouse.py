@@ -86,23 +86,26 @@ def demande_des_prochains_passages_a_un_arret(handler_input):
 
     if arret_bus_slot in slots:
         arret_bus_demande = slots[arret_bus_slot].value
-        p = prochains_passages(arret_bus_demande)
-        if p is None:
-            speech = "Dans les prochaines heures, \
-aucun passage prévu à l'arrêt {}.".format(arret_bus_demande)
-        else:
-            if p.ligne == "A":
-                speech = "Le métro ligne {},".format(p.ligne)
-            if p.ligne == "B":
-                speech = "Le métro ligne {}".format(p.ligne)
-                # No comma here because it is pronounced "Bi" and not "Bé"
-            elif p.ligne in ["T1", "T2"]:
-                speech = "Le tramway {},".format(p.ligne)
-            else:
-                speech = "Le bus {},".format(p.ligne)
+        liste_p = prochains_passages(arret_bus_demande)
 
-            speech += " à destination de {}, passera dans {} \
-à l'arrêt {}.".format(p.destination, p.timedelta_str, arret_bus_demande)
+        speech = "A l'arrêt {}, ".format(arret_bus_demande)
+        for p in liste_p:
+            if p is None:
+                speech = "Dans les prochaines heures, \
+aucun passage prévu à l'arrêt {}.".format(arret_bus_demande)
+            else:
+                if p.ligne == "A":
+                    speech += "Le métro ligne {},".format(p.ligne)
+                if p.ligne == "B":
+                    speech += "Le métro ligne {}".format(p.ligne)
+                    # No comma here because it is pronounced "Bi" and not "Bé"
+                elif p.ligne in ["T1", "T2"]:
+                    speech += "Le tramway {},".format(p.ligne)
+                else:
+                    speech += "Le bus {},".format(p.ligne)
+
+                speech += " à destination de {}, passera dans {}. ".format(
+                    p.destination, p.timedelta_str)
     else:
         speech = "Je ne suis pas sûr de comprendre le nom de l'arrêt de bus."
 

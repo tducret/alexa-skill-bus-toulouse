@@ -88,11 +88,21 @@ def demande_des_prochains_passages_a_un_arret(handler_input):
         arret_bus_demande = slots[arret_bus_slot].value
         p = prochains_passages(arret_bus_demande)
         if p is None:
-            speech = "Aucun passage prévu à cet arrêt \
-pour les prochaines heures"
+            speech = "Dans les prochaines heures, \
+aucun passage prévu à l'arrêt {}.".format(arret_bus_demande)
         else:
-            speech = "Le bus {} à destination de {} passera dans {}".format(
-                p.ligne, p.destination, p.timedelta_str)
+            if p.ligne == "A":
+                speech = "Le métro ligne {},".format(p.ligne)
+            if p.ligne == "B":
+                speech = "Le métro ligne {}".format(p.ligne)
+                # No comma here because it is pronounced "Bi" and not "Bé"
+            elif p.ligne in ["T1", "T2"]:
+                speech = "Le tramway {},".format(p.ligne)
+            else:
+                speech = "Le bus {},".format(p.ligne)
+
+            speech += " à destination de {}, passera dans {} \
+à l'arrêt {}.".format(p.destination, p.timedelta_str, arret_bus_demande)
     else:
         speech = "Je ne suis pas sûr de comprendre le nom de l'arrêt de bus."
 
@@ -133,7 +143,8 @@ def all_exception_handler(handler_input, exception):
     # respond with custom message
     print("Encountered following exception: {}".format(exception))
 
-    speech = "Désolé, il y a eu un problème. Merci de réessayer."
+    speech = "Désolé, je n'ai pas compris. \
+Dite aide pour obtenir des exemples d'utilisation."
     handler_input.response_builder.speak(speech).ask(speech)
 
     return handler_input.response_builder.response

@@ -11,5 +11,12 @@ with open("stop_areas.json") as f:
     full_dict = json.load(f)
     STOP_AREAS_DICT = full_dict.get("stopAreas").get("stopArea")
 
+liste_stop_areas = []
 for stop_area in STOP_AREAS_DICT:
-    print("{},".format(stop_area.get("name").lower()))
+    liste_stop_areas.append(stop_area.get("name").lower())
+
+# Remove duplicates
+liste_stop_areas = list(set(liste_stop_areas))
+
+for stop_area in liste_stop_areas:
+    print("{},".format(stop_area))

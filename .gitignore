@@ -106,3 +106,7 @@ skill/
 
 # Tisseo files
 stop_areas.json
+lines.json
+liste_arret_bus.txt
+liste_destinations.txt
+liste_lignes.txt

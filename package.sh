@@ -14,6 +14,7 @@ SOURCES="bus_toulouse.py tisseo.py"
 VIRTUAL_ENV="skill"
 NEEDED_PACKAGES="ask_sdk_core ask_sdk_model requests urllib3 certifi idna chardet pytz"
 STOP_AREAS_FILE="stop_areas.json"
+LINES_FILE="lines.json"
 
 # Check if Tisseo API key is properly set to an environment variable
 if [ -z "$TISSEO_API_KEY" ]
@@ -22,6 +23,8 @@ if [ -z "$TISSEO_API_KEY" ]
 else
 	rm "$STOP_AREAS_FILE"
 	curl "http://api.tisseo.fr/v1/stop_areas.json?key=$TISSEO_API_KEY" > "$STOP_AREAS_FILE"
+	rm "$LINES_FILE"
+	curl "https://api.tisseo.fr/v1/lines.json?displayTerminus=1&key=$TISSEO_API_KEY" > "$LINES_FILE"
 fi
 
 # clear out existing package

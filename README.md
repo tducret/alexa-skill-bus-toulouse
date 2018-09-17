@@ -2,13 +2,11 @@
 
 ## Description
 
-![Bus Toulouse Alexa skill icon](/icons/icon_512_A2Z.png)
+![Bus Toulouse Alexa skill icon](/icons/icon_108_A2Z.png)
 
 Non-official Alexa skill to get info about Tisséo Toulouse buses (France).
 
 # Release note
-
--------------------------------
 
 ## v0.1.0 - 17/09/2018
 

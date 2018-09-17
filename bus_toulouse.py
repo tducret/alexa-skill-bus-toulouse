@@ -116,7 +116,7 @@ aucun passage prévu à l'arrêt {}.".format(arret_bus_demande)
             else:
                 if p.ligne == "A":
                     speech += "Le métro ligne {},".format(p.ligne)
-                if p.ligne == "B":
+                elif p.ligne == "B":
                     speech += "Le métro ligne {}".format(p.ligne)
                     # No comma here because it is pronounced "Bi" and not "Bé"
                 elif p.ligne in ["T1", "T2"]:

@@ -2,6 +2,8 @@
 
 ## Description
 
+![Bus Toulouse Alexa skill icon](/icons/icon_512_A2Z.png)
+
 Non-official Alexa skill to get info about Tisséo Toulouse buses (France).
 
 # Release note
@@ -37,6 +39,7 @@ You need [to obtain an API key for Tisséo](https://data.toulouse-metropole.fr/e
 
 - [Alexa development console](https://developer.amazon.com/alexa/console/ask)
 - [AWS Lambda console](https://eu-west-1.console.aws.amazon.com/lambda/home?region=eu-west-1)
+- [Icon generation](https://developer.amazon.com/fr/docs/tools/icon-builder.html)
 
 ### Lambda 
 
